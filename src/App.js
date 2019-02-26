@@ -9,21 +9,22 @@
 
 import React, {Component} from 'react';
 import {Platform, Alert, Button, FlatList, KeyboardAvoidingView, StyleSheet, Text, TextInput, View} from 'react-native';
+DepthChart = require('./DepthChart.js');
 
 type Props = {};
 export default class App extends Component<Props> {
   constructor(props) {
     super(props);
     const players = [
-      {key: 'Claude'},
-      {key: 'John'},
-      {key: 'Jake'},
-      {key: 'Deckard'},
-      {key: 'Logan'},
-      {key: 'Braedan'}
+      {name: 'Claude'},
+      {name: 'John'},
+      {name: 'Jake'},
+      {name: 'Deckard'},
+      {name: 'Logan'},
+      {name: 'Braedan'}
     ];
     this.state = {
-      players: players,
+      depthChartArray: players,
       addPlayerName: ''
     }
   }
@@ -35,8 +36,9 @@ export default class App extends Component<Props> {
         <View style={styles.depthChartWrapper}>
           <View style={styles.depthChartBody}>
             <FlatList style={styles.depthChartList}
-              data={this.state.players}
-              renderItem={({item}) => <Text style={styles.depthChartItem}>{item.key}</Text>}
+              data={this.state.depthChartArray}
+              renderItem={({item}) => <Text style={styles.depthChartItem}>{item.name}</Text>}
+              keyExtractor={(item, index) => item.name}
               />
           </View>
           <View style={styles.depthChartFooter}>
@@ -75,22 +77,22 @@ export default class App extends Component<Props> {
 
     var playersArray = [];
     var playersNames = [];
-    var playersObj = Object.assign({}, this.state.players);
+    var playersObj = Object.assign({}, this.state.depthChartArray);
 
     Object.keys(playersObj).forEach(element => {
       playersArray.push(playersObj[element]);
-      playersNames.push(playersObj[element].key);
+      playersNames.push(playersObj[element].name);
     });
 
-    if (playersNames.includes(newPlayerName)) {
+    if (!DepthChart.isValidName(playersNames, newPlayerName)) {
       Alert.alert('This player is already in the list');
     }
     else {
-      playersArray.push({ key: newPlayerName });
+      playersArray.push({ name: newPlayerName });
 
       this._depthChartAddTextbox.setNativeProps({text: ''});
       this.setState({
-        players: playersArray
+        depthChartArray: playersArray
       });
     }
   }
