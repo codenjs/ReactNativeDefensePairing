@@ -71,30 +71,19 @@ export default class App extends Component<Props> {
   }
 
   _onDepthChartAddButtonPress() {
-    const newPlayerName = this.state.addPlayerName;
-    if (newPlayerName.trim() == '')
+    var dcResponse = DepthChart.Add(this.state.depthChartArray, this.state.addPlayerName);
+
+    if (dcResponse.Error) {
+      if (dcResponse.ErrorMessage) {
+        Alert.alert(dcResponse.ErrorMessage);
+      }
       return;
+    }
 
-    var playersArray = [];
-    var playersNames = [];
-    var playersObj = Object.assign({}, this.state.depthChartArray);
-
-    Object.keys(playersObj).forEach(element => {
-      playersArray.push(playersObj[element]);
-      playersNames.push(playersObj[element].name);
+    this._depthChartAddTextbox.setNativeProps({text: ''});
+    this.setState({
+      depthChartArray: dcResponse.UpdatedDepthChartArray
     });
-
-    if (!DepthChart.isValidName(playersNames, newPlayerName)) {
-      Alert.alert('This player is already in the list');
-    }
-    else {
-      playersArray.push({ name: newPlayerName });
-
-      this._depthChartAddTextbox.setNativeProps({text: ''});
-      this.setState({
-        depthChartArray: playersArray
-      });
-    }
   }
 }
 
