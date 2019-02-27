@@ -87,11 +87,23 @@ export default class App extends Component<Props> {
 
     this._depthChartAddTextbox.setNativeProps({text: ''});
     this.setState({
-      depthChartArray: dcResponse.UpdatedDepthChartArray
+      depthChartArray: dcResponse.UpdatedDepthChartArray,
+      addPlayerName: ''
     });
   }
 
   _onDepthChartClearAllButtonPress() {
+    Alert.alert(
+      'Confirm',
+      'Are you sure you want to Clear All?',
+      [
+        { text: 'Cancel' },
+        { text: 'OK', onPress: () => this._onDepthChartClearAllButtonConfirm()}
+      ]
+    );
+  }
+
+  _onDepthChartClearAllButtonConfirm() {
     this.setState({
       depthChartArray: []
     });
