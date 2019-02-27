@@ -39,6 +39,7 @@ export default class App extends Component<Props> {
               data={this.state.depthChartArray}
               renderItem={({item}) => <Text style={styles.depthChartItem}>{item.name}</Text>}
               keyExtractor={(item, index) => item.name}
+              ListEmptyComponent={<Text style={styles.depthChartItem}>Enter Players</Text>}
               />
           </View>
           <View style={styles.depthChartFooter}>
@@ -65,7 +66,7 @@ export default class App extends Component<Props> {
           </View>
         </View>
         <Text style={styles.depthChartTitleText}>Every Pair o' D</Text>
-        <Text style={styles.depthChartCombinationsEmpty}>None</Text>
+        <Text style={styles.depthChartListEmptyText}>None</Text>
         <Button
           onPress={this._onDepthChartClearAllButtonPress.bind(this)}
           title='Clear All'
@@ -161,7 +162,7 @@ const styles = StyleSheet.create({
     marginRight: 50,
     padding: 3,
   },
-  depthChartCombinationsEmpty: {
+  depthChartListEmptyText: {
     fontSize: 25,
     margin: 20,
   }
