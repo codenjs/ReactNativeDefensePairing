@@ -11,13 +11,15 @@ describe('DepthChart Add', () => {
         expect(result.Error).toBe(false);
         expect(result.ErrorMessage).toBeUndefined();
         expect(result.UpdatedDepthChartArray).toEqual([{name: 'name1'}]);
+        expect(result.UpdatedPairingArray).toEqual([]);
     });
 
-    test('When existing array is not empty and does not contain new name then add new name to array', () => {
+    test('When existing array is not empty and does not contain new name then add new name to array and generate pairings', () => {
         var result = DepthChart.Add([{name: 'name1'}], 'name2');
         expect(result.Error).toBe(false);
         expect(result.ErrorMessage).toBeUndefined();
         expect(result.UpdatedDepthChartArray).toEqual([{name: 'name1'}, {name: 'name2'}]);
+        expect(result.UpdatedPairingArray).toEqual([{name: 'name1/name2'}]);
     });
 
     test('When existing array is not empty and already contains new name then return Error with message', () => {
@@ -25,6 +27,7 @@ describe('DepthChart Add', () => {
         expect(result.Error).toBe(true);
         expect(result.ErrorMessage).toBe('This player is already in the list');
         expect(result.UpdatedDepthChartArray).toBeUndefined();
+        expect(result.UpdatedPairingArray).toBeUndefined();
     });
 
     test('When new name is empty then return Error with no message', () => {
@@ -32,6 +35,7 @@ describe('DepthChart Add', () => {
         expect(result.Error).toBe(true);
         expect(result.ErrorMessage).toBe('');
         expect(result.UpdatedDepthChartArray).toBeUndefined();
+        expect(result.UpdatedPairingArray).toBeUndefined();
     });
 
     test('When new name is undefined then return Error with no message', () => {
@@ -39,5 +43,38 @@ describe('DepthChart Add', () => {
         expect(result.Error).toBe(true);
         expect(result.ErrorMessage).toBe('');
         expect(result.UpdatedDepthChartArray).toBeUndefined();
+        expect(result.UpdatedPairingArray).toBeUndefined();
+    });
+});
+
+describe('DepthChart Generate Pairings', () => {
+    test('When input is empty then output is empty', () => {
+        var result = DepthChart.GeneratePairings([]);
+        expect(result).toEqual([]);
+    });
+
+    test('When input contains 1 name then output is empty', () => {
+        var result = DepthChart.GeneratePairings(['name1']);
+        expect(result).toEqual([]);
+    });
+
+    test('When input contains 2 names then output contains 1 pairing', () => {
+        var result = DepthChart.GeneratePairings(['name1', 'name2']);
+        expect(result).toEqual(['name1/name2']);
+    });
+
+    test('When input contains 3 names then output contains 3 pairings', () => {
+        var result = DepthChart.GeneratePairings(['name1', 'name2', 'name3']);
+        expect(result).toEqual(['name1/name2', 'name1/name3', 'name2/name3']);
+    });
+
+    test('When input contains 4 names then output contains 6 pairings', () => {
+        var result = DepthChart.GeneratePairings(['name1', 'name2', 'name3', 'name4']);
+        expect(result).toEqual(['name1/name2', 'name1/name3', 'name1/name4', 'name2/name3', 'name2/name4', 'name3/name4']);
+    });
+
+    test('When input contains 5 names then output contains 10 pairings', () => {
+        var result = DepthChart.GeneratePairings(['name1', 'name2', 'name3', 'name4', 'name5']);
+        expect(result).toEqual(['name1/name2', 'name1/name3', 'name1/name4', 'name1/name5', 'name2/name3', 'name2/name4', 'name2/name5', 'name3/name4', 'name3/name5', 'name4/name5']);
     });
 });

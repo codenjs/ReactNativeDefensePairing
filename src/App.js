@@ -15,16 +15,10 @@ type Props = {};
 export default class App extends Component<Props> {
   constructor(props) {
     super(props);
-    const players = [
-      {name: 'Claude'},
-      {name: 'John'},
-      {name: 'Jake'},
-      {name: 'Deckard'},
-      {name: 'Logan'},
-      {name: 'Braedan'}
-    ];
+
     this.state = {
-      depthChartArray: players,
+      depthChartArray: [],
+      pairingArray: [],
       addPlayerName: ''
     }
   }
@@ -66,7 +60,12 @@ export default class App extends Component<Props> {
           </View>
         </View>
         <Text style={styles.depthChartTitleText}>Every Pair o' D</Text>
-        <Text style={styles.depthChartListEmptyText}>None</Text>
+        <FlatList style={styles.depthChartList}
+          data={this.state.pairingArray}
+          renderItem={({item}) => <Text style={styles.depthChartItem}>{item.name}</Text>}
+          keyExtractor={(item, index) => item.name}
+          ListEmptyComponent={<Text style={styles.depthChartItem}>Enter at least 2 players</Text>}
+          />
         <Button
           onPress={this._onDepthChartClearAllButtonPress.bind(this)}
           title='Clear All'
@@ -89,6 +88,7 @@ export default class App extends Component<Props> {
     this._depthChartAddTextbox.setNativeProps({text: ''});
     this.setState({
       depthChartArray: dcResponse.UpdatedDepthChartArray,
+      pairingArray: dcResponse.UpdatedPairingArray,
       addPlayerName: ''
     });
   }
@@ -106,7 +106,8 @@ export default class App extends Component<Props> {
 
   _onDepthChartClearAllButtonConfirm() {
     this.setState({
-      depthChartArray: []
+      depthChartArray: [],
+      pairingArray: []
     });
   }
 }
@@ -161,9 +162,5 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     marginRight: 50,
     padding: 3,
-  },
-  depthChartListEmptyText: {
-    fontSize: 25,
-    margin: 20,
   }
 });
