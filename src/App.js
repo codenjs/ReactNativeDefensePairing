@@ -56,7 +56,7 @@ export default class App extends Component<Props> {
             </KeyboardAvoidingView>
             <KeyboardAvoidingView behavior='height'>
               <View style={styles.depthChartAddButtonWrapper}>
-                <Button style={styles.depthChartAddButton}
+                <Button
                   onPress={this._onDepthChartAddButtonPress.bind(this)}
                   title='Add'
                   />
@@ -66,6 +66,11 @@ export default class App extends Component<Props> {
         </View>
         <Text style={styles.depthChartTitleText}>Every Pair o' D</Text>
         <Text style={styles.depthChartCombinationsEmpty}>None</Text>
+        <Button
+          onPress={this._onDepthChartClearAllButtonPress.bind(this)}
+          title='Clear All'
+          color='red'
+          />
       </View>
     );
   }
@@ -83,6 +88,12 @@ export default class App extends Component<Props> {
     this._depthChartAddTextbox.setNativeProps({text: ''});
     this.setState({
       depthChartArray: dcResponse.UpdatedDepthChartArray
+    });
+  }
+
+  _onDepthChartClearAllButtonPress() {
+    this.setState({
+      depthChartArray: []
     });
   }
 }
@@ -137,8 +148,6 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     marginRight: 50,
     padding: 3,
-  },
-  depthChartAddButton: {
   },
   depthChartCombinationsEmpty: {
     fontSize: 25,
