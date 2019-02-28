@@ -28,7 +28,7 @@ export default class App extends Component<Props> {
       <View style={styles.depthChartComponentMainContainer}>
         <View style={styles.depthChartColumnContainer}>
           <View style={styles.depthChartColumn}>
-            <Text style={styles.depthChartTitleText}>Depth Chart</Text>
+            <Text style={styles.depthChartTitleText}>{this._appendCounter('Depth Chart', this.state.depthChartArray)}</Text>
             <FlatList style={styles.depthChartList}
               data={this.state.depthChartArray}
               renderItem={({item}) => <Text style={styles.depthChartListItem}>{item.name}</Text>}
@@ -54,7 +54,7 @@ export default class App extends Component<Props> {
               </View>
           </View>
           <View style={styles.depthChartColumn}>
-            <Text style={styles.depthChartTitleText}>{this._pairingListTitle()}</Text>
+            <Text style={styles.depthChartTitleText}>{this._appendCounter('All Pairings', this.state.pairingArray)}</Text>
             <FlatList style={styles.depthChartList}
               data={this.state.pairingArray}
               renderItem={({item}) => <Text style={styles.depthChartListItemCompressed}>{item.name}</Text>}
@@ -76,11 +76,11 @@ export default class App extends Component<Props> {
     );
   }
 
-  _pairingListTitle() {
-    if (this.state.pairingArray.length == 0)
-      return 'All Pairings';
+  _appendCounter(name, items) {
+    if (items.length == 0)
+      return name;
     else
-      return 'All Pairings (' + this.state.pairingArray.length + ')';
+      return name + ' (' + items.length + ')';
   }
 
   _onDepthChartAddButtonPress() {
