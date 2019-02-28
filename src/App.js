@@ -54,7 +54,7 @@ export default class App extends Component<Props> {
               </View>
           </View>
           <View style={styles.depthChartColumn}>
-            <Text style={styles.depthChartTitleText}>All Pairings</Text>
+            <Text style={styles.depthChartTitleText}>{this._pairingListTitle()}</Text>
             <FlatList style={styles.depthChartList}
               data={this.state.pairingArray}
               renderItem={({item}) => <Text style={styles.depthChartListItem}>{item.name}</Text>}
@@ -74,6 +74,13 @@ export default class App extends Component<Props> {
         </View>
       </View>
     );
+  }
+
+  _pairingListTitle() {
+    if (this.state.pairingArray.length == 0)
+      return 'All Pairings';
+    else
+      return 'All Pairings (' + this.state.pairingArray.length + ')';
   }
 
   _onDepthChartAddButtonPress() {
