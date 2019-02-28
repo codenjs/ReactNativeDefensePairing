@@ -33,7 +33,7 @@ export default class App extends Component<Props> {
               data={this.state.depthChartArray}
               renderItem={({item}) => <Text style={styles.depthChartListItem}>{item.name}</Text>}
               keyExtractor={(item, index) => item.name}
-              ListEmptyComponent={<Text style={styles.depthChartListItemEmpty}>Enter Players</Text>}
+              ListEmptyComponent={<Text style={styles.depthChartListItemEmpty}>Enter players below</Text>}
               />
             <View style={styles.depthChartAddTextboxWrapper}>
               <TextInput style={styles.depthChartAddTextbox}
@@ -57,7 +57,7 @@ export default class App extends Component<Props> {
             <Text style={styles.depthChartTitleText}>{this._pairingListTitle()}</Text>
             <FlatList style={styles.depthChartList}
               data={this.state.pairingArray}
-              renderItem={({item}) => <Text style={styles.depthChartListItem}>{item.name}</Text>}
+              renderItem={({item}) => <Text style={styles.depthChartListItemCompressed}>{item.name}</Text>}
               keyExtractor={(item, index) => item.name}
               ListEmptyComponent={<Text style={styles.depthChartListItemEmpty}>Enter at least 2 players</Text>}
               />
@@ -146,6 +146,16 @@ const styles = StyleSheet.create({
     paddingRight: 3,
   },
   depthChartListItem: {
+    fontSize: 24,
+    borderWidth: 1,
+    borderColor: 'darkgray',
+    marginTop: 3,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  depthChartListItemCompressed: {
     fontSize: 20,
     borderWidth: 1,
     borderColor: 'darkgray',
@@ -156,12 +166,15 @@ const styles = StyleSheet.create({
     paddingRight: 20,
   },
   depthChartListItemEmpty: {
-    fontSize: 20,
+    fontSize: 24,
     textAlign: 'center',
     borderWidth: 1,
     borderColor: 'darkgray',
     marginTop: 3,
-    padding: 3,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 3,
+    paddingRight: 3,
   },
   depthChartFooter: {
     flex: 1,
