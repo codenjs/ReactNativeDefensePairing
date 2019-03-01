@@ -47,7 +47,7 @@ describe('DepthChart Add', () => {
     });
 });
 
-describe('DepthChart Generate Pairings', () => {
+describe('DepthChart GeneratePairings', () => {
     test('When input is empty then output is empty', () => {
         var result = DepthChart.GeneratePairings([]);
         expect(result).toEqual([]);
@@ -76,5 +76,26 @@ describe('DepthChart Generate Pairings', () => {
     test('When input contains 5 names then output contains 10 pairings', () => {
         var result = DepthChart.GeneratePairings(['name1', 'name2', 'name3', 'name4', 'name5']);
         expect(result).toEqual(['name1/name2', 'name1/name3', 'name1/name4', 'name1/name5', 'name2/name3', 'name2/name4', 'name2/name5', 'name3/name4', 'name3/name5', 'name4/name5']);
+    });
+});
+
+describe('DepthChart GeneratePairingsFromPlayerArray', () => {
+    test('When input array is null then output arrays are empty', () => {
+        var result = DepthChart.GeneratePairingsFromPlayerArray(null);
+        expect(result.Players).toEqual([]);
+        expect(result.Pairings).toEqual([]);
+    });
+
+    test('When input array is empty then output arrays are empty', () => {
+        var result = DepthChart.GeneratePairingsFromPlayerArray([]);
+        expect(result.Players).toEqual([]);
+        expect(result.Pairings).toEqual([]);
+    });
+
+    test('When input array is not empty then output Players array equals input Players array and Pairings are generated', () => {
+        var input = [{name: 'name1'}, {name: 'name2'}];
+        var result = DepthChart.GeneratePairingsFromPlayerArray(input);
+        expect(result.Players).toEqual(input);
+        expect(result.Pairings).toEqual([{name: 'name1/name2'}]);
     });
 });

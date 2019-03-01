@@ -23,7 +23,7 @@ class DepthChart {
         existingNames.push(newPlayerName);
 
         let pairingStringArray = this.GeneratePairings(existingNames);
-        let pairingObjectArray = pairingStringArray.map(s => ({ name: s }));
+        let pairingObjectArray = this._getObjectsFromNames(pairingStringArray);
 
         return this._getSuccessResult(newArray, pairingObjectArray);
     }
@@ -43,6 +43,14 @@ class DepthChart {
         };
     }
 
+    static _getNamesFromObjects(objectArray) {
+        return objectArray.map(o => o.name);
+    }
+
+    static _getObjectsFromNames(nameArray) {
+        return nameArray.map(n => ({ name: n }));
+    }
+
     static GeneratePairings(names) {
         var pairings = [];
 
@@ -54,6 +62,19 @@ class DepthChart {
         }
 
         return pairings;
+    }
+
+    static GeneratePairingsFromPlayerArray(playerArray) {
+        let resultPlayers = playerArray || [];
+
+        let names = this._getNamesFromObjects(resultPlayers);
+        let pairings = this.GeneratePairings(names);
+        let resultPairings = this._getObjectsFromNames(pairings);
+
+        return {
+            Players: resultPlayers,
+            Pairings: resultPairings
+        };
     }
 }
 

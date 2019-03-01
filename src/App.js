@@ -27,10 +27,12 @@ export default class App extends Component<Props> {
   componentDidMount() {
     DataStore.get(DataStoreKey)
     .then((data) => {
+      var depthChartData = DepthChart.GeneratePairingsFromPlayerArray(data);
       this.setState({
         isLoading: false,
-        depthChartArray: data || []
-      })
+        depthChartArray: depthChartData.Players,
+        pairingArray: depthChartData.Pairings
+      });
     });
   }
 
