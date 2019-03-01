@@ -1,7 +1,4 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
  * @format
  * @flow
  * @lint-ignore-every XPLATJSCOPYRIGHT1
@@ -9,6 +6,7 @@
 
 import React, {Component} from 'react';
 import {Platform, Alert, Button, FlatList, StyleSheet, Text, TextInput, View} from 'react-native';
+import AppLoadingView from './AppLoadingView.js';
 import DataStore from 'react-native-simple-store';
 const DataStoreKey = 'depthChartArray';
 DepthChart = require('./DepthChart.js');
@@ -38,11 +36,7 @@ export default class App extends Component<Props> {
 
   render() {
     if (this.state.isLoading) {
-      return (
-        <View style={styles.depthChartComponentLoadingContainer}>
-          <Text style={styles.depthChartComponentLoadingText}>Loading...</Text>
-        </View>
-      );
+      return (<AppLoadingView />);
     }
 
     return (
@@ -219,17 +213,5 @@ const styles = StyleSheet.create({
   },
   depthChartClearAllButtonWrapper: {
     margin: 20,
-  },
-  depthChartComponentLoadingContainer: {
-    flex: 1,
-    justifyContent: 'center'
-  },
-  depthChartComponentLoadingText: {
-    fontSize: 50,
-    textAlign: 'center',
-    borderWidth: 1,
-    borderColor: 'darkgray',
-    margin: 20,
-    padding: 20,
   }
 });
