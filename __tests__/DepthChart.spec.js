@@ -3,7 +3,7 @@
  * @lint-ignore-every XPLATJSCOPYRIGHT1
  */
 
-DepthChart = require('../src/DepthChart.js');
+import DepthChart from '../src/DepthChart.js';
 
 describe('DepthChart Add', () => {
     test('When existing array is empty then add new name to array', () => {

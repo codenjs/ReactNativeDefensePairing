@@ -1,4 +1,4 @@
-class DepthChart {
+export default class DepthChart {
 
     static Add(existingDepthChartArray, newPlayerName) {
         if (!newPlayerName) {
@@ -77,5 +77,3 @@ class DepthChart {
         };
     }
 }
-
-module.exports = DepthChart;

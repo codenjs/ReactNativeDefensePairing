@@ -7,9 +7,9 @@
 import React, {Component} from 'react';
 import {Platform, Alert, Button, FlatList, StyleSheet, Text, TextInput, View} from 'react-native';
 import AppLoadingView from './AppLoadingView.js';
+import DepthChart from './DepthChart.js';
 import DataStore from 'react-native-simple-store';
 const DataStoreKey = 'depthChartArray';
-DepthChart = require('./DepthChart.js');
 
 type Props = {};
 export default class App extends Component<Props> {
