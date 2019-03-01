@@ -10,40 +10,37 @@ describe('DepthChart Add', () => {
         var result = DepthChart.Add([], 'name1');
         expect(result.Error).toBe(false);
         expect(result.ErrorMessage).toBeUndefined();
-        expect(result.UpdatedDepthChartArray).toEqual([{name: 'name1'}]);
-        expect(result.UpdatedPairingArray).toEqual([]);
+        expect(result.UpdatedDepthChartData.Players).toEqual([{name: 'name1'}]);
+        expect(result.UpdatedDepthChartData.Pairings).toEqual([]);
     });
 
     test('When existing array is not empty and does not contain new name then add new name to array and generate pairings', () => {
         var result = DepthChart.Add([{name: 'name1'}], 'name2');
         expect(result.Error).toBe(false);
         expect(result.ErrorMessage).toBeUndefined();
-        expect(result.UpdatedDepthChartArray).toEqual([{name: 'name1'}, {name: 'name2'}]);
-        expect(result.UpdatedPairingArray).toEqual([{name: 'name1/name2'}]);
+        expect(result.UpdatedDepthChartData.Players).toEqual([{name: 'name1'}, {name: 'name2'}]);
+        expect(result.UpdatedDepthChartData.Pairings).toEqual([{name: 'name1/name2'}]);
     });
 
     test('When existing array is not empty and already contains new name then return Error with message', () => {
         var result = DepthChart.Add([{name: 'name1'}], 'name1');
         expect(result.Error).toBe(true);
         expect(result.ErrorMessage).toBe('This player is already in the list');
-        expect(result.UpdatedDepthChartArray).toBeUndefined();
-        expect(result.UpdatedPairingArray).toBeUndefined();
+        expect(result.UpdatedDepthChartData).toBeUndefined();
     });
 
     test('When new name is empty then return Error with no message', () => {
         var result = DepthChart.Add([{name: 'name1'}], '');
         expect(result.Error).toBe(true);
         expect(result.ErrorMessage).toBe('');
-        expect(result.UpdatedDepthChartArray).toBeUndefined();
-        expect(result.UpdatedPairingArray).toBeUndefined();
+        expect(result.UpdatedDepthChartData).toBeUndefined();
     });
 
     test('When new name is undefined then return Error with no message', () => {
         var result = DepthChart.Add([{name: 'name1'}], undefined);
         expect(result.Error).toBe(true);
         expect(result.ErrorMessage).toBe('');
-        expect(result.UpdatedDepthChartArray).toBeUndefined();
-        expect(result.UpdatedPairingArray).toBeUndefined();
+        expect(result.UpdatedDepthChartData).toBeUndefined();
     });
 });
 
@@ -97,5 +94,13 @@ describe('DepthChart GeneratePairingsFromPlayerArray', () => {
         var result = DepthChart.GeneratePairingsFromPlayerArray(input);
         expect(result.Players).toEqual(input);
         expect(result.Pairings).toEqual([{name: 'name1/name2'}]);
+    });
+});
+
+describe('DepthChart GetEmptyObject', () => {
+    test('Both output arrays should be empty', () => {
+        var result = DepthChart.GetEmptyObject();
+        expect(result.Players).toEqual([]);
+        expect(result.Pairings).toEqual([]);
     });
 });

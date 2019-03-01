@@ -18,8 +18,7 @@ export default class App extends Component<Props> {
 
     this.state = {
       isLoading: true,
-      depthChartArray: [],
-      pairingArray: [],
+      depthChartData: DepthChart.GetEmptyObject(),
       addPlayerName: ''
     }
   }
@@ -30,8 +29,7 @@ export default class App extends Component<Props> {
       var depthChartData = DepthChart.GeneratePairingsFromPlayerArray(data);
       this.setState({
         isLoading: false,
-        depthChartArray: depthChartData.Players,
-        pairingArray: depthChartData.Pairings
+        depthChartData: depthChartData
       });
     });
   }
@@ -45,9 +43,9 @@ export default class App extends Component<Props> {
       <View style={styles.depthChartComponentMainContainer}>
         <View style={styles.depthChartColumnContainer}>
           <View style={styles.depthChartColumn}>
-            <Text style={styles.depthChartTitleText}>{this._appendCounter('Depth Chart', this.state.depthChartArray)}</Text>
+            <Text style={styles.depthChartTitleText}>{this._appendCounter('Depth Chart', this.state.depthChartData.Players)}</Text>
             <FlatList style={styles.depthChartList}
-              data={this.state.depthChartArray}
+              data={this.state.depthChartData.Players}
               renderItem={({item}) => <Text style={styles.depthChartListItem}>{item.name}</Text>}
               keyExtractor={(item, index) => item.name}
               ListEmptyComponent={<Text style={styles.depthChartListItemEmpty}>Enter players below</Text>}
@@ -71,9 +69,9 @@ export default class App extends Component<Props> {
               </View>
           </View>
           <View style={styles.depthChartColumn}>
-            <Text style={styles.depthChartTitleText}>{this._appendCounter('All Pairings', this.state.pairingArray)}</Text>
+            <Text style={styles.depthChartTitleText}>{this._appendCounter('All Pairings', this.state.depthChartData.Pairings)}</Text>
             <FlatList style={styles.depthChartList}
-              data={this.state.pairingArray}
+              data={this.state.depthChartData.Pairings}
               renderItem={({item}) => <Text style={styles.depthChartListItemCompressed}>{item.name}</Text>}
               keyExtractor={(item, index) => item.name}
               ListEmptyComponent={<Text style={styles.depthChartListItemEmpty}>Enter at least 2 players</Text>}
@@ -101,7 +99,7 @@ export default class App extends Component<Props> {
   }
 
   _onDepthChartAddButtonPress() {
-    var dcResponse = DepthChart.Add(this.state.depthChartArray, this.state.addPlayerName);
+    var dcResponse = DepthChart.Add(this.state.depthChartData.Players, this.state.addPlayerName);
 
     if (dcResponse.Error) {
       if (dcResponse.ErrorMessage) {
@@ -110,11 +108,10 @@ export default class App extends Component<Props> {
       return;
     }
 
-    DataStore.save(DataStoreKey, dcResponse.UpdatedDepthChartArray);
+    DataStore.save(DataStoreKey, dcResponse.UpdatedDepthChartData.Players);
     this._depthChartAddTextbox.setNativeProps({text: ''});
     this.setState({
-      depthChartArray: dcResponse.UpdatedDepthChartArray,
-      pairingArray: dcResponse.UpdatedPairingArray,
+      depthChartData: dcResponse.UpdatedDepthChartData,
       addPlayerName: ''
     });
   }
@@ -133,8 +130,7 @@ export default class App extends Component<Props> {
   _onDepthChartClearAllButtonConfirm() {
     DataStore.delete(DataStoreKey);
     this.setState({
-      depthChartArray: [],
-      pairingArray: []
+      depthChartData: DepthChart.GetEmptyObject()
     });
   }
 }

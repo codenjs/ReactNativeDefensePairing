@@ -28,11 +28,17 @@ export default class DepthChart {
         return this._getSuccessResult(newArray, pairingObjectArray);
     }
 
-    static _getSuccessResult(depthChartArray, pairingArray) {
+    static _getDepthChartData(playersArray, pairingsArray) {
+        return {
+            Players: playersArray,
+            Pairings: pairingsArray
+        };
+    }
+
+    static _getSuccessResult(playersArray, pairingsArray) {
         return {
             Error: false,
-            UpdatedDepthChartArray: depthChartArray,
-            UpdatedPairingArray: pairingArray
+            UpdatedDepthChartData: this._getDepthChartData(playersArray, pairingsArray)
         };
     }
 
@@ -71,9 +77,10 @@ export default class DepthChart {
         let pairings = this.GeneratePairings(names);
         let resultPairings = this._getObjectsFromNames(pairings);
 
-        return {
-            Players: resultPlayers,
-            Pairings: resultPairings
-        };
+        return this._getDepthChartData(resultPlayers, resultPairings);
+    }
+
+    static GetEmptyObject() {
+        return this._getDepthChartData([], []);
     }
 }
