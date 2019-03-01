@@ -9,6 +9,8 @@
 
 import React, {Component} from 'react';
 import {Platform, Alert, Button, FlatList, StyleSheet, Text, TextInput, View} from 'react-native';
+import DataStore from 'react-native-simple-store';
+const DataStoreKey = 'depthChartArray';
 DepthChart = require('./DepthChart.js');
 
 type Props = {};
@@ -17,13 +19,32 @@ export default class App extends Component<Props> {
     super(props);
 
     this.state = {
+      isLoading: true,
       depthChartArray: [],
       pairingArray: [],
       addPlayerName: ''
     }
   }
 
+  componentDidMount() {
+    DataStore.get(DataStoreKey)
+    .then((data) => {
+      this.setState({
+        isLoading: false,
+        depthChartArray: data || []
+      })
+    });
+  }
+
   render() {
+    if (this.state.isLoading) {
+      return (
+        <View style={styles.depthChartComponentLoadingContainer}>
+          <Text style={styles.depthChartComponentLoadingText}>Loading...</Text>
+        </View>
+      );
+    }
+
     return (
       <View style={styles.depthChartComponentMainContainer}>
         <View style={styles.depthChartColumnContainer}>
@@ -93,6 +114,7 @@ export default class App extends Component<Props> {
       return;
     }
 
+    DataStore.save(DataStoreKey, dcResponse.UpdatedDepthChartArray);
     this._depthChartAddTextbox.setNativeProps({text: ''});
     this.setState({
       depthChartArray: dcResponse.UpdatedDepthChartArray,
@@ -113,6 +135,7 @@ export default class App extends Component<Props> {
   }
 
   _onDepthChartClearAllButtonConfirm() {
+    DataStore.delete(DataStoreKey);
     this.setState({
       depthChartArray: [],
       pairingArray: []
@@ -196,5 +219,17 @@ const styles = StyleSheet.create({
   },
   depthChartClearAllButtonWrapper: {
     margin: 20,
+  },
+  depthChartComponentLoadingContainer: {
+    flex: 1,
+    justifyContent: 'center'
+  },
+  depthChartComponentLoadingText: {
+    fontSize: 50,
+    textAlign: 'center',
+    borderWidth: 1,
+    borderColor: 'darkgray',
+    margin: 20,
+    padding: 20,
   }
 });
