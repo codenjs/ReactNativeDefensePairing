@@ -6,7 +6,7 @@
 
 import React, {Component} from 'react';
 import {Platform, Alert, Button, FlatList, StyleSheet, Text, TextInput, View} from 'react-native';
-import AppLoadingView from './AppLoadingView.js';
+import SplashScreen from 'react-native-splash-screen'
 import DepthChart from './DepthChart.js';
 import DataStore from 'react-native-simple-store';
 const DataStoreKey = 'depthChartArray';
@@ -17,7 +17,6 @@ export default class App extends Component<Props> {
     super(props);
 
     this.state = {
-      isLoading: true,
       depthChartData: DepthChart.GetEmptyObject(),
       addPlayerName: ''
     }
@@ -28,17 +27,13 @@ export default class App extends Component<Props> {
     .then((data) => {
       var depthChartData = DepthChart.GeneratePairingsFromPlayerArray(data);
       this.setState({
-        isLoading: false,
         depthChartData: depthChartData
       });
+      SplashScreen.hide();
     });
   }
 
   render() {
-    if (this.state.isLoading) {
-      return (<AppLoadingView />);
-    }
-
     return (
       <View style={styles.depthChartComponentMainContainer}>
         <View style={styles.depthChartColumnContainer}>
