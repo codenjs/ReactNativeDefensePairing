@@ -1,4 +1,4 @@
-package com.reactnativedefensepairing;
+package com.codenjs.parityapp;
 
 import android.app.Application;
 
