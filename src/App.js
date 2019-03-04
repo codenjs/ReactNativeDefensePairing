@@ -7,6 +7,7 @@
 import React, {Component} from 'react';
 import {Platform, Alert, Button, FlatList, StyleSheet, Text, TextInput, View} from 'react-native';
 import SplashScreen from 'react-native-splash-screen'
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import DepthChart from './DepthChart.js';
 import DataStore from 'react-native-simple-store';
 const DataStoreKey = 'depthChartArray';
@@ -37,7 +38,7 @@ export default class App extends Component<Props> {
     return (
       <View style={styles.depthChartComponentMainContainer}>
         <View style={styles.depthChartColumnContainer}>
-          <View style={styles.depthChartColumn}>
+          <View style={styles.depthChartColumnLeft}>
             <Text style={styles.depthChartTitleText}>{this._appendCounter('Depth Chart', this.state.depthChartData.Players)}</Text>
             <FlatList style={styles.depthChartList}
               data={this.state.depthChartData.Players}
@@ -63,7 +64,7 @@ export default class App extends Component<Props> {
                   />
               </View>
           </View>
-          <View style={styles.depthChartColumn}>
+          <View style={styles.depthChartColumnRight}>
             <Text style={styles.depthChartTitleText}>{this._appendCounter('All Pairings', this.state.depthChartData.Pairings)}</Text>
             <FlatList style={styles.depthChartList}
               data={this.state.depthChartData.Pairings}
@@ -134,19 +135,25 @@ const styles = StyleSheet.create({
   depthChartComponentMainContainer: {
     flex: 1,
     flexDirection: 'column',
+    paddingTop: hp('1.5%'),
+    paddingBottom: hp('1.5%'),
+    paddingLeft: wp('2%'),
+    paddingRight: wp('2%'),
   },
   depthChartColumnContainer : {
     flex: 9,
     flexDirection: 'row',
   },
-  depthChartColumn : {
-    width: '50%',
-    padding: 20,
+  depthChartColumnLeft : {
+    width: wp('48%'),
+    paddingRight: wp('2%'),
+  },
+  depthChartColumnRight : {
+    width: wp('48%'),
   },
   depthChartTitleText: {
-    fontSize: 30,
+    fontSize: hp('2.3%'),
     textAlign: 'center',
-    marginTop: 10,
   },
   depthChartList: {
     borderWidth: 1,
@@ -156,33 +163,33 @@ const styles = StyleSheet.create({
     paddingRight: 3,
   },
   depthChartListItem: {
-    fontSize: 24,
+    fontSize: hp('1.8%'),
     borderWidth: 1,
     borderColor: 'darkgray',
     marginTop: 3,
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingTop: hp('0.5%'),
+    paddingBottom: hp('0.5%'),
+    paddingLeft: wp('2%'),
+    paddingRight: wp('2%'),
   },
   depthChartListItemCompressed: {
-    fontSize: 20,
+    fontSize: hp('1.5%'),
     borderWidth: 1,
     borderColor: 'darkgray',
     marginTop: 3,
     paddingTop: 3,
     paddingBottom: 3,
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingLeft: wp('2%'),
+    paddingRight: wp('2%'),
   },
   depthChartListItemEmpty: {
-    fontSize: 24,
+    fontSize: hp('1.8%'),
     textAlign: 'center',
     borderWidth: 1,
     borderColor: 'darkgray',
     marginTop: 3,
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingTop: hp('0.5%'),
+    paddingBottom: hp('0.5%'),
     paddingLeft: 3,
     paddingRight: 3,
   },
@@ -192,19 +199,22 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   depthChartAddTextboxWrapper: {
-    marginTop: 20,
+    marginTop: hp('1.5%'),
   },
   depthChartAddTextbox: {
-    fontSize: 20,
+    fontSize: hp('1.8%'),
     borderWidth: 1,
     borderColor: 'black',
-    padding: 10,
+    paddingTop: hp('0.5%'),
+    paddingBottom: hp('0.5%'),
+    paddingLeft: wp('2%'),
+    paddingRight: wp('2%'),
   },
   depthChartAddButtonWrapper: {
-    marginTop: 20,
-    marginBottom: 20,
+    marginTop: hp('1.5%'),
   },
   depthChartClearAllButtonWrapper: {
-    margin: 20,
+    marginTop: hp('1.5%'),
+    marginBottom: hp('1.5%'),
   }
 });
