@@ -44,12 +44,12 @@ export default class App extends Component<Props> {
               data={this.state.depthChartData.Players}
               renderItem={({item}) => <Text style={styles.depthChartListItem}>{item.name}</Text>}
               keyExtractor={(item, index) => item.name}
-              ListEmptyComponent={<Text style={styles.depthChartListItemEmpty}>Enter players below</Text>}
+              ListEmptyComponent={<Text style={styles.depthChartListItemEmpty}>Enter players{"\n"}below</Text>}
               />
             <View style={styles.depthChartAddTextboxWrapper}>
               <TextInput style={styles.depthChartAddTextbox}
                 ref={component => this._depthChartAddTextbox = component}
-                placeholder='Enter Player Name'
+                placeholder='Player Name'
                 onChangeText={(data) => this.setState({ addPlayerName: data })}
                 underlineColorAndroid='transparent'
                 autoComplete='off'
@@ -70,7 +70,7 @@ export default class App extends Component<Props> {
               data={this.state.depthChartData.Pairings}
               renderItem={({item}) => <Text style={styles.depthChartListItemCompressed}>{item.name}</Text>}
               keyExtractor={(item, index) => item.name}
-              ListEmptyComponent={<Text style={styles.depthChartListItemEmpty}>Enter at least 2 players</Text>}
+              ListEmptyComponent={<Text style={styles.depthChartListItemEmpty}>Enter at least{"\n"}2 players</Text>}
               />
           </View>
         </View>
@@ -145,14 +145,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   depthChartColumnLeft : {
-    width: wp('48%'),
+    width: wp('40%'),
     paddingRight: wp('2%'),
   },
   depthChartColumnRight : {
-    width: wp('48%'),
+    width: wp('56%'),
   },
   depthChartTitleText: {
-    fontSize: hp('2.3%'),
+    fontSize: hp('2.5%'),
     textAlign: 'center',
   },
   depthChartList: {
@@ -163,31 +163,28 @@ const styles = StyleSheet.create({
     paddingRight: 3,
   },
   depthChartListItem: {
-    fontSize: hp('1.8%'),
-    borderWidth: 1,
+    fontSize: hp('2.5%'),
+    borderBottomWidth: 1,
     borderColor: 'darkgray',
-    marginTop: 3,
-    paddingTop: hp('0.5%'),
-    paddingBottom: hp('0.5%'),
-    paddingLeft: wp('2%'),
-    paddingRight: wp('2%'),
-  },
-  depthChartListItemCompressed: {
-    fontSize: hp('1.5%'),
-    borderWidth: 1,
-    borderColor: 'darkgray',
-    marginTop: 3,
     paddingTop: 3,
     paddingBottom: 3,
     paddingLeft: wp('2%'),
     paddingRight: wp('2%'),
   },
-  depthChartListItemEmpty: {
-    fontSize: hp('1.8%'),
-    textAlign: 'center',
-    borderWidth: 1,
+  depthChartListItemCompressed: {
+    fontSize: hp('2%'),
+    borderBottomWidth: 1,
     borderColor: 'darkgray',
-    marginTop: 3,
+    paddingTop: 2,
+    paddingBottom: 2,
+    paddingLeft: wp('2%'),
+    paddingRight: wp('2%'),
+  },
+  depthChartListItemEmpty: {
+    fontSize: hp('2.5%'),
+    textAlign: 'center',
+    borderBottomWidth: 1,
+    borderColor: 'darkgray',
     paddingTop: hp('0.5%'),
     paddingBottom: hp('0.5%'),
     paddingLeft: 3,
@@ -202,11 +199,11 @@ const styles = StyleSheet.create({
     marginTop: hp('1.5%'),
   },
   depthChartAddTextbox: {
-    fontSize: hp('1.8%'),
+    fontSize: hp('2.5%'),
     borderWidth: 1,
     borderColor: 'black',
-    paddingTop: hp('0.5%'),
-    paddingBottom: hp('0.5%'),
+    paddingTop: 3,
+    paddingBottom: 3,
     paddingLeft: wp('2%'),
     paddingRight: wp('2%'),
   },
