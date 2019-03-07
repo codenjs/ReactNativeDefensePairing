@@ -1,2 +1,2 @@
 # ReactNativeDefensePairing
-React Native test project to create a mobile app for hockey coaches to generate defensive pairings
+React Native test project: Create a mobile app for hockey coaches to generate defensive pairings
