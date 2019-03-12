@@ -7,6 +7,7 @@
 import React, {Component} from 'react';
 import {Platform, Alert, Button, FlatList, StyleSheet, Text, TextInput, View} from 'react-native';
 import SplashScreen from 'react-native-splash-screen'
+import DepthChartListItem from './DepthChartListItem.js';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import DepthChart from './DepthChart.js';
 import DataStore from 'react-native-simple-store';
@@ -42,7 +43,7 @@ export default class App extends Component<Props> {
             <Text style={styles.depthChartTitleText}>{this._appendCounter('Depth Chart', this.state.depthChartData.Players)}</Text>
             <FlatList style={styles.depthChartList}
               data={this.state.depthChartData.Players}
-              renderItem={({item}) => <Text style={styles.depthChartListItem}>{item.name}</Text>}
+              renderItem={({item, index}) => this._renderDepthChartListItem(item, index)}
               keyExtractor={(item, index) => item.name}
               ListEmptyComponent={<Text style={styles.depthChartListItemEmpty}>Enter players{"\n"}below</Text>}
               />
@@ -87,6 +88,17 @@ export default class App extends Component<Props> {
     );
   }
 
+  _renderDepthChartListItem(item, index) {
+    return (
+      <DepthChartListItem
+        index={index}
+        onDelete={this._onDepthChartListItemDelete}
+        >
+        <Text style={styles.depthChartListItem}>{item.name}</Text>
+      </DepthChartListItem>
+    );
+  }
+
   _appendCounter(name, items) {
     if (items.length == 0)
       return name;
@@ -111,6 +123,17 @@ export default class App extends Component<Props> {
       addPlayerName: ''
     });
   }
+
+  _onDepthChartListItemDelete = (index) => {
+    var updatedPlayers = this.state.depthChartData.Players;
+    updatedPlayers.splice(index, 1);
+    DataStore.save(DataStoreKey, updatedPlayers);
+
+    var depthChartData = DepthChart.GeneratePairingsFromPlayerArray(updatedPlayers);
+    this.setState({
+      depthChartData: depthChartData
+    });
+  };
 
   _onDepthChartClearAllButtonPress() {
     Alert.alert(
