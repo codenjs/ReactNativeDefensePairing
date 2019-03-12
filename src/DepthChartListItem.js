@@ -5,15 +5,19 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {RectButton} from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export default class DepthChartListItem extends Component<Props> {
   renderLeftActions = (progress, dragX) => {
     return (
       <RectButton style={styles.deleteButton} onPress={this._onDeletePress}>
-        <Text style={styles.deleteButtonText}>X</Text>
+        <View style={styles.actionIconWrapper}>
+          <Icon name='delete-forever' style={styles.actionIcon} />
+        </View>
       </RectButton>
     );
   };
@@ -36,12 +40,18 @@ export default class DepthChartListItem extends Component<Props> {
 }
 
 const styles = StyleSheet.create({
-  deleteButton: {
-    backgroundColor: 'red',
-  },
-  deleteButtonText: {
+  actionIcon: {
     color: 'white',
-    padding: 15,
+    fontSize: hp('3%'),
+  },
+  actionIconWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  deleteButton: {
+    width: wp('7%'),
+    backgroundColor: 'red',
   },
   swipeableButton: {
     backgroundColor: '#FAFAFA',
