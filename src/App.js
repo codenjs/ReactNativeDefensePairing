@@ -158,20 +158,18 @@ const styles = StyleSheet.create({
   depthChartComponentMainContainer: {
     flex: 1,
     flexDirection: 'column',
-    paddingTop: hp('1.5%'),
-    paddingBottom: hp('1.5%'),
-    paddingLeft: wp('2%'),
-    paddingRight: wp('2%'),
+    paddingVertical: hp('1.5%'),
+    paddingHorizontal: wp('2%'),
   },
-  depthChartColumnContainer : {
+  depthChartColumnContainer: {
     flex: 9,
     flexDirection: 'row',
   },
-  depthChartColumnLeft : {
+  depthChartColumnLeft: {
     width: wp('40%'),
     paddingRight: wp('2%'),
   },
-  depthChartColumnRight : {
+  depthChartColumnRight: {
     width: wp('56%'),
   },
   depthChartTitleText: {
@@ -182,36 +180,29 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
     paddingBottom: 3,
-    paddingLeft: 3,
-    paddingRight: 3,
+    paddingHorizontal: 3,
   },
   depthChartListItem: {
     fontSize: hp('2.5%'),
     borderBottomWidth: 1,
     borderColor: 'darkgray',
-    paddingTop: 3,
-    paddingBottom: 3,
-    paddingLeft: wp('2%'),
-    paddingRight: wp('2%'),
+    paddingVertical: 3,
+    paddingHorizontal: wp('2%'),
   },
   depthChartListItemCompressed: {
     fontSize: hp('2%'),
     borderBottomWidth: 1,
     borderColor: 'darkgray',
-    paddingTop: 2,
-    paddingBottom: 2,
-    paddingLeft: wp('2%'),
-    paddingRight: wp('2%'),
+    paddingVertical: 2,
+    paddingHorizontal: wp('2%'),
   },
   depthChartListItemEmpty: {
     fontSize: hp('2.5%'),
     textAlign: 'center',
     borderBottomWidth: 1,
     borderColor: 'darkgray',
-    paddingTop: hp('0.5%'),
-    paddingBottom: hp('0.5%'),
-    paddingLeft: 3,
-    paddingRight: 3,
+    paddingVertical: hp('0.5%'),
+    paddingHorizontal: 3,
   },
   depthChartFooter: {
     flex: 1,
@@ -225,16 +216,13 @@ const styles = StyleSheet.create({
     fontSize: hp('2.5%'),
     borderWidth: 1,
     borderColor: 'black',
-    paddingTop: 3,
-    paddingBottom: 3,
-    paddingLeft: wp('2%'),
-    paddingRight: wp('2%'),
+    paddingVertical: 3,
+    paddingHorizontal: wp('2%'),
   },
   depthChartAddButtonWrapper: {
     marginTop: hp('1.5%'),
   },
   depthChartClearAllButtonWrapper: {
-    marginTop: hp('1.5%'),
-    marginBottom: hp('1.5%'),
+    marginVertical: hp('1.5%'),
   }
 });
