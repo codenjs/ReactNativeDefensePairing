@@ -5,13 +5,18 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Animated, StyleSheet, Text, View} from 'react-native';
 import {RectButton} from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export default class DepthChartListItem extends Component<Props> {
+  constructor(props) {
+    super(props);
+    this._animationValue = new Animated.Value(1);
+  }
+
   renderLeftActions = (progress, dragX) => {
     return (
       <RectButton style={styles.deleteButton} onPress={this._onDeletePress}>
@@ -23,19 +28,40 @@ export default class DepthChartListItem extends Component<Props> {
   };
 
   _onDeletePress = () => {
-    this.props.onDelete(this.props.index);
+    Animated.timing(this._animationValue, {
+      toValue: 0,
+      duration: 300,
+    }).start(() => {
+      this.props.onDelete(this.props.index);
+    });
   };
 
   render() {
     return (
-      <Swipeable
-        overshootLeft={false}
-        renderLeftActions={this.renderLeftActions}>
-        <RectButton style={styles.swipeableButton}>
-          {this.props.children}
-        </RectButton>
-      </Swipeable>
+      <Animated.View style={this._animationStyles()}>
+        <Swipeable
+          overshootLeft={false}
+          renderLeftActions={this.renderLeftActions}>
+          <RectButton style={styles.swipeableButton}>
+            {this.props.children}
+          </RectButton>
+        </Swipeable>
+      </Animated.View>
     );
+  }
+
+  _animationStyles() {
+    return [
+      {
+        opacity: this._animationValue
+      },
+      {
+        backgroundColor: this._animationValue.interpolate({
+          inputRange: [0, 1],
+          outputRange: ['rgba(0, 0, 0, 1)', 'rgba(0, 0, 0, 0)']
+        })
+      },
+    ];
   }
 }
 
