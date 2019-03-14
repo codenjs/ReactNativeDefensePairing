@@ -14,6 +14,14 @@ describe('DepthChart Add', () => {
         expect(result.UpdatedDepthChartData.Pairings).toEqual([]);
     });
 
+    test('When new name starts and ends with whitespace then add trimmed name to array', () => {
+        var result = DepthChart.Add([], ' name1 ');
+        expect(result.Error).toBe(false);
+        expect(result.ErrorMessage).toBeUndefined();
+        expect(result.UpdatedDepthChartData.Players).toEqual([{name: 'name1'}]);
+        expect(result.UpdatedDepthChartData.Pairings).toEqual([]);
+    });
+
     test('When existing array is not empty and does not contain new name then add new name to array and generate pairings', () => {
         var result = DepthChart.Add([{name: 'name1'}], 'name2');
         expect(result.Error).toBe(false);
@@ -31,6 +39,13 @@ describe('DepthChart Add', () => {
 
     test('When new name is empty then return Error with no message', () => {
         var result = DepthChart.Add([{name: 'name1'}], '');
+        expect(result.Error).toBe(true);
+        expect(result.ErrorMessage).toBe('');
+        expect(result.UpdatedDepthChartData).toBeUndefined();
+    });
+
+    test('When new name is whitespace then return Error with no message', () => {
+        var result = DepthChart.Add([{name: 'name1'}], ' ');
         expect(result.Error).toBe(true);
         expect(result.ErrorMessage).toBe('');
         expect(result.UpdatedDepthChartData).toBeUndefined();

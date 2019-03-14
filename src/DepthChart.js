@@ -1,10 +1,11 @@
 export default class DepthChart {
 
     static Add(existingDepthChartArray, newPlayerName) {
-        if (!newPlayerName) {
+        if (!newPlayerName || !newPlayerName.trim()) {
             return this._getErrorResult('');
         }
 
+        newPlayerName = newPlayerName.trim();
         var newArray = [];
         var existingNames = [];
 
