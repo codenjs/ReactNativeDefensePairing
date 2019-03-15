@@ -41,12 +41,14 @@ export default class App extends Component<Props> {
         <View style={styles.depthChartColumnContainer}>
           <View style={styles.depthChartColumnLeft}>
             <Text style={styles.depthChartTitleText}>{this._appendCounter('Depth Chart', this.state.depthChartData.Players)}</Text>
+            <View style={styles.depthChartListVerticalBorder} />
             <FlatList style={styles.depthChartList}
               data={this.state.depthChartData.Players}
               renderItem={({item, index}) => this._renderDepthChartListItem(item, index)}
               keyExtractor={(item, index) => item.name}
               ListEmptyComponent={<Text style={styles.depthChartListItemEmpty}>Enter players{"\n"}below</Text>}
               />
+            <View style={styles.depthChartListVerticalBorder} />
             <View style={styles.depthChartAddTextboxWrapper}>
               <TextInput style={styles.depthChartAddTextbox}
                 ref={component => this._depthChartAddTextbox = component}
@@ -67,12 +69,14 @@ export default class App extends Component<Props> {
           </View>
           <View style={styles.depthChartColumnRight}>
             <Text style={styles.depthChartTitleText}>{this._appendCounter('All Pairings', this.state.depthChartData.Pairings)}</Text>
+            <View style={styles.depthChartListVerticalBorder} />
             <FlatList style={styles.depthChartList}
               data={this.state.depthChartData.Pairings}
               renderItem={({item}) => <Text style={styles.depthChartListItemCompressed}>{item.name}</Text>}
               keyExtractor={(item, index) => item.name}
               ListEmptyComponent={<Text style={styles.depthChartListItemEmpty}>Enter at least{"\n"}2 players</Text>}
               />
+            <View style={styles.depthChartListVerticalBorder} />
           </View>
         </View>
         <View style={styles.depthChartFooter}>
@@ -177,30 +181,34 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   depthChartList: {
-    borderWidth: 1,
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
     borderColor: 'black',
-    paddingBottom: 3,
     paddingHorizontal: 3,
+  },
+  depthChartListVerticalBorder: {
+    height: 1,
+    backgroundColor: 'black',
   },
   depthChartListItem: {
     fontSize: hp('2.5%'),
-    borderBottomWidth: 1,
-    borderColor: 'darkgray',
+    borderBottomWidth: 2,
+    borderColor: 'lightgray',
     paddingVertical: 3,
     paddingHorizontal: wp('2%'),
   },
   depthChartListItemCompressed: {
     fontSize: hp('2%'),
-    borderBottomWidth: 1,
-    borderColor: 'darkgray',
+    borderBottomWidth: 2,
+    borderColor: 'lightgray',
     paddingVertical: 2,
     paddingHorizontal: wp('2%'),
   },
   depthChartListItemEmpty: {
     fontSize: hp('2.5%'),
     textAlign: 'center',
-    borderBottomWidth: 1,
-    borderColor: 'darkgray',
+    borderBottomWidth: 2,
+    borderColor: 'lightgray',
     paddingVertical: hp('0.5%'),
     paddingHorizontal: 3,
   },
