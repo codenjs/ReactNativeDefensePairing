@@ -5,19 +5,20 @@
  */
 
 import React, {Component} from 'react';
-import {Animated, StyleSheet, Text, View} from 'react-native';
+import {Animated, StyleSheet, View} from 'react-native';
+import PropTypes from 'prop-types';
 import {RectButton} from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
-export default class DepthChartListItem extends Component<Props> {
+export default class DepthChartListItem extends Component {
   constructor(props) {
     super(props);
     this._animationValue = new Animated.Value(1);
   }
 
-  renderLeftActions = (progress, dragX) => {
+  renderLeftActions = () => {
     return (
       <RectButton style={styles.deleteButton} onPress={this._onDeletePress}>
         <View style={styles.actionIconWrapper}>
@@ -83,3 +84,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFAFA',
   },
 });
+
+DepthChartListItem.propTypes = {
+  children: PropTypes.any,
+  index: PropTypes.number,
+  onDelete: PropTypes.func
+};

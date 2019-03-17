@@ -5,7 +5,7 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, Alert, Button, FlatList, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Alert, Button, FlatList, StyleSheet, Text, TextInput, View} from 'react-native';
 import SplashScreen from 'react-native-splash-screen'
 import DepthChartListItem from './DepthChartListItem.js';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -45,7 +45,7 @@ export default class App extends Component<Props> {
             <FlatList style={styles.depthChartList}
               data={this.state.depthChartData.Players}
               renderItem={({item, index}) => this._renderDepthChartListItem(item, index)}
-              keyExtractor={(item, index) => item.name}
+              keyExtractor={(item) => item.name}
               ListEmptyComponent={<Text style={styles.depthChartListItemEmpty}>Enter players{"\n"}below</Text>}
               />
             <View style={styles.depthChartListVerticalBorder} />
@@ -73,7 +73,7 @@ export default class App extends Component<Props> {
             <FlatList style={styles.depthChartList}
               data={this.state.depthChartData.Pairings}
               renderItem={({item}) => <Text style={styles.depthChartListItemCompressed}>{item.name}</Text>}
-              keyExtractor={(item, index) => item.name}
+              keyExtractor={(item) => item.name}
               ListEmptyComponent={<Text style={styles.depthChartListItemEmpty}>Enter at least{"\n"}2 players</Text>}
               />
             <View style={styles.depthChartListVerticalBorder} />
