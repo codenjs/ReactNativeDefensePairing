@@ -1,7 +1,6 @@
 /**
  * @format
  * @flow
- * @lint-ignore-every XPLATJSCOPYRIGHT1
  */
 
 import React, {Component} from 'react';
@@ -55,7 +54,6 @@ export default class App extends Component<Props> {
                 placeholder='Player Name'
                 onChangeText={(data) => this.setState({ addPlayerName: data })}
                 underlineColorAndroid='transparent'
-                autoComplete='off'
                 autoCorrect={false}
                 />
             </View>
