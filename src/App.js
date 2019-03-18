@@ -95,6 +95,8 @@ export default class App extends Component<Props> {
       <DepthChartListItem
         index={index}
         onDelete={this._onDepthChartListItemDelete}
+        onMoveDown={this._onDepthChartListItemMoveDown}
+        onMoveUp={this._onDepthChartListItemMoveUp}
         >
         <Text style={styles.depthChartListItem}>{item.name}</Text>
       </DepthChartListItem>
@@ -128,7 +130,20 @@ export default class App extends Component<Props> {
 
   _onDepthChartListItemDelete = (index) => {
     var dcResponse = DepthChart.Delete(this.state.depthChartData.Players, index);
+    this._updateDepthChartState(dcResponse);
+  };
 
+  _onDepthChartListItemMoveDown = (index) => {
+    var dcResponse = DepthChart.Move(this.state.depthChartData.Players, index, index + 1);
+    this._updateDepthChartState(dcResponse);
+  };
+
+  _onDepthChartListItemMoveUp = (index) => {
+    var dcResponse = DepthChart.Move(this.state.depthChartData.Players, index, index - 1);
+    this._updateDepthChartState(dcResponse);
+  };
+
+  _updateDepthChartState = (dcResponse) => {
     DataStore.save(DataStoreKey, dcResponse.UpdatedDepthChartData.Players);
 
     this.setState({

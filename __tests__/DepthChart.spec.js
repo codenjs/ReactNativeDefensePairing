@@ -68,6 +68,16 @@ describe('DepthChart Delete', () => {
     });
 });
 
+describe('DepthChart Move', () => {
+    test('When destination index is valid then switch source item with destination item', () => {
+        var result = DepthChart.Move([{name: 'name1'}, {name: 'name2'}], 0, 1);
+        expect(result.Error).toBe(false);
+        expect(result.ErrorMessage).toBeUndefined();
+        expect(result.UpdatedDepthChartData.Players).toEqual([{name: 'name2'}, {name: 'name1'}]);
+        expect(result.UpdatedDepthChartData.Pairings).toEqual([{name: 'name2/name1'}]);
+    });
+});
+
 describe('DepthChart GeneratePairings', () => {
     test('When input is empty then output is empty', () => {
         var result = DepthChart.GeneratePairings([]);

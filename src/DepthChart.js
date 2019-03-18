@@ -30,10 +30,17 @@ export default class DepthChart {
     }
 
     static Delete(existingDepthChartArray, index) {
-        var updatedPlayerArray = existingDepthChartArray;
-        updatedPlayerArray.splice(index, 1);
+        existingDepthChartArray.splice(index, 1);
 
-        return this.GeneratePairingsFromPlayerArray(updatedPlayerArray);
+        return this.GeneratePairingsFromPlayerArray(existingDepthChartArray);
+    }
+
+    static Move(existingDepthChartArray, sourceIndex, destinationIndex) {
+        var tmp = existingDepthChartArray[destinationIndex];
+        existingDepthChartArray[destinationIndex] = existingDepthChartArray[sourceIndex];
+        existingDepthChartArray[sourceIndex] = tmp;
+
+        return this.GeneratePairingsFromPlayerArray(existingDepthChartArray);
     }
 
     static _getDepthChartData(playersArray, pairingsArray) {

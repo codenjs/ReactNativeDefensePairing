@@ -17,14 +17,27 @@ export default class DepthChartListItem extends Component {
     this._animationValue = new Animated.Value(1);
   }
 
-  renderLeftActions = () => {
+  _renderActionButton = (iconName, style, onPress) => {
     return (
-      <RectButton style={styles.deleteButton} onPress={this._onDeletePress}>
+      <RectButton style={style} onPress={onPress}>
         <View style={styles.actionIconWrapper}>
-          <Icon name='delete-forever' style={styles.actionIcon} />
+          <Icon name={iconName} style={styles.actionIcon} />
         </View>
       </RectButton>
     );
+  };
+
+  _renderLeftActions = () => {
+    return (
+      <View style={styles.actionButtonGroup}>
+        {this._renderActionButton('keyboard-arrow-up', styles.moveButton, this._onMoveUpPress)}
+        {this._renderActionButton('keyboard-arrow-down', styles.moveButton, this._onMoveDownPress)}
+      </View>
+    );
+  };
+
+  _renderRightActions = () => {
+    return this._renderActionButton('delete-forever', styles.deleteButton, this._onDeletePress);
   };
 
   _onDeletePress = () => {
@@ -36,12 +49,23 @@ export default class DepthChartListItem extends Component {
     });
   };
 
+  _onMoveDownPress = () => {
+    this.props.onMoveDown(this.props.index);
+  };
+
+  _onMoveUpPress = () => {
+    this.props.onMoveUp(this.props.index);
+  };
+
   render() {
     return (
       <Animated.View style={this._animationStyles()}>
         <Swipeable
           overshootLeft={false}
-          renderLeftActions={this.renderLeftActions}>
+          overshootRight={false}
+          renderLeftActions={this._renderLeftActions}
+          renderRightActions={this._renderRightActions}
+          >
           <RectButton style={styles.swipeableButton}>
             {this.props.children}
           </RectButton>
@@ -66,6 +90,9 @@ export default class DepthChartListItem extends Component {
 }
 
 const styles = StyleSheet.create({
+  actionButtonGroup: {
+    flexDirection: 'row'
+  },
   actionIcon: {
     color: 'white',
     fontSize: hp('3%'),
@@ -79,6 +106,10 @@ const styles = StyleSheet.create({
     width: wp('7%'),
     backgroundColor: 'red',
   },
+  moveButton: {
+    width: wp('7%'),
+    backgroundColor: 'blue',
+  },
   swipeableButton: {
     backgroundColor: '#FAFAFA',
   },
@@ -87,5 +118,7 @@ const styles = StyleSheet.create({
 DepthChartListItem.propTypes = {
   children: PropTypes.any,
   index: PropTypes.number,
-  onDelete: PropTypes.func
+  onDelete: PropTypes.func,
+  onMoveDown: PropTypes.func,
+  onMoveUp: PropTypes.func
 };
