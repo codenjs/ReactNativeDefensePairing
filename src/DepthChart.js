@@ -36,6 +36,10 @@ export default class DepthChart {
     }
 
     static Move(existingDepthChartArray, sourceIndex, destinationIndex) {
+        if (destinationIndex < 0 || destinationIndex >= existingDepthChartArray.length) {
+            return this._getErrorResult('');
+        }
+
         var tmp = existingDepthChartArray[destinationIndex];
         existingDepthChartArray[destinationIndex] = existingDepthChartArray[sourceIndex];
         existingDepthChartArray[sourceIndex] = tmp;

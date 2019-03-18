@@ -113,14 +113,12 @@ export default class App extends Component<Props> {
   _onDepthChartAddButtonPress() {
     var dcResponse = DepthChart.Add(this.state.depthChartData.Players, this.state.addPlayerName);
 
-    if (dcResponse.Error) {
-      if (dcResponse.ErrorMessage) {
-        Alert.alert(dcResponse.ErrorMessage);
-      }
+    if (this._depthChartErrorOccurred(dcResponse)) {
       return;
     }
 
     DataStore.save(DataStoreKey, dcResponse.UpdatedDepthChartData.Players);
+
     this._depthChartAddTextbox.setNativeProps({text: ''});
     this.setState({
       depthChartData: dcResponse.UpdatedDepthChartData,
@@ -144,11 +142,25 @@ export default class App extends Component<Props> {
   };
 
   _updateDepthChartState = (dcResponse) => {
+    if (this._depthChartErrorOccurred(dcResponse)) {
+      return;
+    }
+
     DataStore.save(DataStoreKey, dcResponse.UpdatedDepthChartData.Players);
 
     this.setState({
       depthChartData: dcResponse.UpdatedDepthChartData
     });
+  };
+
+  _depthChartErrorOccurred = (dcResponse) => {
+    if (dcResponse.Error) {
+      if (dcResponse.ErrorMessage) {
+        Alert.alert(dcResponse.ErrorMessage);
+      }
+      return true;
+    }
+    return false;
   };
 
   _onDepthChartClearAllButtonPress() {

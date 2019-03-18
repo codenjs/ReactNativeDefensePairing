@@ -69,12 +69,26 @@ describe('DepthChart Delete', () => {
 });
 
 describe('DepthChart Move', () => {
-    test('When destination index is valid then switch source item with destination item', () => {
+    test('When destination index is within valid range then switch source item with destination item', () => {
         var result = DepthChart.Move([{name: 'name1'}, {name: 'name2'}], 0, 1);
         expect(result.Error).toBe(false);
         expect(result.ErrorMessage).toBeUndefined();
         expect(result.UpdatedDepthChartData.Players).toEqual([{name: 'name2'}, {name: 'name1'}]);
         expect(result.UpdatedDepthChartData.Pairings).toEqual([{name: 'name2/name1'}]);
+    });
+
+    test('When destination index is less than zero then return Error with no message', () => {
+        var result = DepthChart.Move([{name: 'name1'}, {name: 'name2'}], 0, -1);
+        expect(result.Error).toBe(true);
+        expect(result.ErrorMessage).toBe('');
+        expect(result.UpdatedDepthChartData).toBeUndefined();
+    });
+
+    test('When destination index is greater than array length then return Error with no message', () => {
+        var result = DepthChart.Move([{name: 'name1'}, {name: 'name2'}], 1, 2);
+        expect(result.Error).toBe(true);
+        expect(result.ErrorMessage).toBe('');
+        expect(result.UpdatedDepthChartData).toBeUndefined();
     });
 });
 
