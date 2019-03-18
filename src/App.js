@@ -26,9 +26,9 @@ export default class App extends Component<Props> {
   componentDidMount() {
     DataStore.get(DataStoreKey)
     .then((data) => {
-      var depthChartData = DepthChart.GeneratePairingsFromPlayerArray(data);
+      var dcResponse = DepthChart.GeneratePairingsFromPlayerArray(data);
       this.setState({
-        depthChartData: depthChartData
+        depthChartData: dcResponse.UpdatedDepthChartData
       });
       SplashScreen.hide();
     });
@@ -127,13 +127,12 @@ export default class App extends Component<Props> {
   }
 
   _onDepthChartListItemDelete = (index) => {
-    var updatedPlayers = this.state.depthChartData.Players;
-    updatedPlayers.splice(index, 1);
-    DataStore.save(DataStoreKey, updatedPlayers);
+    var dcResponse = DepthChart.Delete(this.state.depthChartData.Players, index);
 
-    var depthChartData = DepthChart.GeneratePairingsFromPlayerArray(updatedPlayers);
+    DataStore.save(DataStoreKey, dcResponse.UpdatedDepthChartData.Players);
+
     this.setState({
-      depthChartData: depthChartData
+      depthChartData: dcResponse.UpdatedDepthChartData
     });
   };
 

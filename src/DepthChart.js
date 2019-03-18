@@ -29,6 +29,13 @@ export default class DepthChart {
         return this._getSuccessResult(newArray, pairingObjectArray);
     }
 
+    static Delete(existingDepthChartArray, index) {
+        var updatedPlayerArray = existingDepthChartArray;
+        updatedPlayerArray.splice(index, 1);
+
+        return this.GeneratePairingsFromPlayerArray(updatedPlayerArray);
+    }
+
     static _getDepthChartData(playersArray, pairingsArray) {
         return {
             Players: playersArray,
@@ -78,7 +85,7 @@ export default class DepthChart {
         let pairings = this.GeneratePairings(names);
         let resultPairings = this._getObjectsFromNames(pairings);
 
-        return this._getDepthChartData(resultPlayers, resultPairings);
+        return this._getSuccessResult(resultPlayers, resultPairings);
     }
 
     static GetEmptyObject() {

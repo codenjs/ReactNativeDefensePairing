@@ -58,6 +58,16 @@ describe('DepthChart Add', () => {
     });
 });
 
+describe('DepthChart Delete', () => {
+    test('When index is valid then return array without specified item', () => {
+        var result = DepthChart.Delete([{name: 'name1'}, {name: 'name2'}, {name: 'name3'}], 1);
+        expect(result.Error).toBe(false);
+        expect(result.ErrorMessage).toBeUndefined();
+        expect(result.UpdatedDepthChartData.Players).toEqual([{name: 'name1'}, {name: 'name3'}]);
+        expect(result.UpdatedDepthChartData.Pairings).toEqual([{name: 'name1/name3'}]);
+    });
+});
+
 describe('DepthChart GeneratePairings', () => {
     test('When input is empty then output is empty', () => {
         var result = DepthChart.GeneratePairings([]);
@@ -93,21 +103,27 @@ describe('DepthChart GeneratePairings', () => {
 describe('DepthChart GeneratePairingsFromPlayerArray', () => {
     test('When input array is null then output arrays are empty', () => {
         var result = DepthChart.GeneratePairingsFromPlayerArray(null);
-        expect(result.Players).toEqual([]);
-        expect(result.Pairings).toEqual([]);
+        expect(result.Error).toBe(false);
+        expect(result.ErrorMessage).toBeUndefined();
+        expect(result.UpdatedDepthChartData.Players).toEqual([]);
+        expect(result.UpdatedDepthChartData.Pairings).toEqual([]);
     });
 
     test('When input array is empty then output arrays are empty', () => {
         var result = DepthChart.GeneratePairingsFromPlayerArray([]);
-        expect(result.Players).toEqual([]);
-        expect(result.Pairings).toEqual([]);
+        expect(result.Error).toBe(false);
+        expect(result.ErrorMessage).toBeUndefined();
+        expect(result.UpdatedDepthChartData.Players).toEqual([]);
+        expect(result.UpdatedDepthChartData.Pairings).toEqual([]);
     });
 
     test('When input array is not empty then output Players array equals input Players array and Pairings are generated', () => {
         var input = [{name: 'name1'}, {name: 'name2'}];
         var result = DepthChart.GeneratePairingsFromPlayerArray(input);
-        expect(result.Players).toEqual(input);
-        expect(result.Pairings).toEqual([{name: 'name1/name2'}]);
+        expect(result.Error).toBe(false);
+        expect(result.ErrorMessage).toBeUndefined();
+        expect(result.UpdatedDepthChartData.Players).toEqual(input);
+        expect(result.UpdatedDepthChartData.Pairings).toEqual([{name: 'name1/name2'}]);
     });
 });
 
